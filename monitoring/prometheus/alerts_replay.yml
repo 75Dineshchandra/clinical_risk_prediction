@@ -1,0 +1,50 @@
+# Replay alert rules (step 11). Same ideas as alerts.yml, but with 3-minute windows so they react within a
+# replay that lasts minutes instead of hours. Use them for the replay and drills; the slower rules in
+# alerts.yml are the ones for real traffic. No notification is sent anywhere: they show on
+# http://localhost:9090/alerts.
+#
+# Each simulated week should last 90 to 120 seconds for these to fire cleanly (replay.py --seconds-per-week 120).
+groups:
+  - name: readmission-replay
+    rules:
+      - alert: ReplayFlaggedShareOutOfRange
+        # Needs more than 200 stays in the window, so a tiny batch cannot trigger it.
+        expr: |
+          (
+            (sum(increase(readmission_predictions_total{outcome="high_risk"}[3m])) / sum(increase(readmission_predictions_total[3m])) > 0.28)
+            or
+            (sum(increase(readmission_predictions_total{outcome="high_risk"}[3m])) / sum(increase(readmission_predictions_total[3m])) < 0.12)
+          )
+          and on() (sum(increase(readmission_predictions_total[3m])) > 200)
+        for: 1m
+        labels: {severity: warning, scope: replay}
+        annotations:
+          summary: "Share of stays flagged high risk is outside 12% to 28% (last 3 minutes)"
+
+      - alert: ReplayUnseenCategories
+        expr: sum(increase(readmission_unseen_category_total[3m])) > 25
+        for: 30s
+        labels: {severity: warning, scope: replay}
+        annotations:
+          summary: "More than 25 category values never seen in training in the last 3 minutes"
+
+      - alert: ReplayErrorShare
+        # Needs at least 20 requests in the window, so a stray 404 or one bad call while the API is nearly idle
+        # (the console alone makes about 12 health checks per 3 minutes) cannot trigger it.
+        expr: |
+          (
+            sum(increase(readmission_http_requests_total{status!~"2.."}[3m]))
+            / sum(increase(readmission_http_requests_total[3m])) > 0.05
+          )
+          and on() (sum(increase(readmission_http_requests_total[3m])) > 20)
+        for: 30s
+        labels: {severity: warning, scope: replay}
+        annotations:
+          summary: "More than 5% of requests were rejected or failed in the last 3 minutes (with at least 20 requests)"
+
+      - alert: ReplayModelChanged
+        # The loaded-at timestamp changes on every load: a reload, a promotion, a rollback or a restart.
+        expr: changes(readmission_model_loaded_timestamp_seconds[10m]) > 0
+        labels: {severity: info, scope: replay}
+        annotations:
+          summary: "The API loaded a model in the last 10 minutes (reload, promotion, rollback or restart)"

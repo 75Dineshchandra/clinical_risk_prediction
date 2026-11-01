@@ -1,0 +1,23 @@
+FROM python:3.9-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+WORKDIR /app
+
+# requirements first, so Docker's layer cache skips the install when only the code changes
+COPY requirements-drift.txt .
+RUN pip install --no-cache-dir -r requirements-drift.txt
+
+COPY drift_lib.py drift_exporter.py ./
+
+RUN useradd --create-home --uid 1000 appuser && chown -R appuser /app
+USER appuser
+
+EXPOSE 9100
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
+    CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:9100/metrics', timeout=4)"
+
+# the log and the reference profile are mounted read-only by docker-compose.yml
+CMD ["python", "drift_exporter.py"]

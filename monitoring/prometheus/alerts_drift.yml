@@ -1,0 +1,38 @@
+# Drift alert rules (step 13, Phase B). The values come from monitoring/drift_exporter.py, which compares the most
+# recent stays in the prediction log with the reference profile saved next to the model.
+# PSI: below 0.10 stable, 0.10 to 0.25 moderate, above 0.25 major.
+# No notification is sent anywhere: the alerts show on http://localhost:9090/alerts.
+#
+# When the exporter has no verdict (too few stays, no recent traffic, no profile) it removes the PSI series, so these
+# alerts clear by themselves instead of staying stuck on old data.
+groups:
+  - name: readmission-drift
+    rules:
+      - alert: FeatureDriftMajor
+        expr: readmission_feature_psi > 0.25
+        for: 1m
+        labels: {severity: warning, scope: drift}
+        annotations:
+          summary: 'Major input drift in {{ $labels.feature }} (PSI {{ $value | printf "%.2f" }}) over the most recent stays'
+
+      - alert: FeatureDriftModerate
+        expr: readmission_feature_psi > 0.10 and readmission_feature_psi <= 0.25
+        for: 1m
+        labels: {severity: info, scope: drift}
+        annotations:
+          summary: 'Moderate input drift in {{ $labels.feature }} (PSI {{ $value | printf "%.2f" }}) over the most recent stays'
+
+      - alert: ScoreDriftMajor
+        # Only stays scored by the same model version as the reference profile are used, so a model swap is not counted.
+        expr: readmission_score_psi > 0.25
+        for: 1m
+        labels: {severity: warning, scope: drift}
+        annotations:
+          summary: 'The distribution of scores moved a lot (PSI {{ $value | printf "%.2f" }}) over the most recent stays'
+
+      - alert: DriftExporterDown
+        expr: up{job="drift-exporter"} == 0
+        for: 2m
+        labels: {severity: warning, scope: drift}
+        annotations:
+          summary: "The drift exporter cannot be scraped, so drift is not being watched"

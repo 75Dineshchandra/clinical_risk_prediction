@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Readmission Risk Console</title>
+<link rel="icon" href="/favicon.ico" type="image/svg+xml">
+<link rel="stylesheet" href="/ui/styles.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#4f46e5"/><path d="M4 17h6l3-8 5 15 3-7h7" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div><b>Readmission Risk Console</b><span>30-day readmission ranking model</span></div>
+    </div>
+    <div class="top-right">
+      <span id="status" class="pill muted">Checking…</span>
+      <a class="link" href="/docs" target="_blank" rel="noopener">API docs ↗</a>
+    </div>
+  </div>
+  <nav class="tabs" id="tabs">
+    <button data-view="score">Score a stay</button>
+    <button data-view="batch">Score a file</button>
+    <button data-view="model">Model</button>
+    <button data-view="monitor">Monitoring</button>
+  </nav>
+</header>
+
+<main>
+  <div id="banner" class="banner" hidden></div>
+
+  <!-- SCORE -->
+  <section id="view-score" class="view">
+    <div class="split">
+      <div>
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h2>Score a stay</h2>
+              <p class="muted">Enter the stay's details or load the example. Dropdowns list the values the model saw in training; choose “Other…” to type a new one.</p>
+            </div>
+            <div class="btns">
+              <button class="btn ghost" id="btnExample" type="button">Load example</button>
+              <button class="btn ghost" id="btnClear" type="button">Clear</button>
+            </div>
+          </div>
+          <div class="idrow"><label class="field"><span class="lab">Stay ID (optional, returned with the result)</span><input id="stayId" type="text" placeholder="e.g. 16680" autocomplete="off"></label></div>
+          <div id="formMount" class="muted mt">Loading the form…</div>
+          <div class="actions">
+            <label class="check"><input type="checkbox" id="optExplain" checked> Show main drivers</label>
+            <label class="sel"><span class="muted">Top</span>
+              <select id="optTopK"><option>3</option><option selected>5</option><option>8</option><option>10</option></select></label>
+            <button class="btn primary" id="btnScore" type="button">Score this stay</button>
+          </div>
+        </div>
+      </div>
+      <aside>
+        <div class="card sticky" id="resultMount" aria-live="polite">
+          <div class="empty"><div class="ico">📈</div><b>No result yet</b><p class="small mt">Load the example or fill in the form, then press “Score this stay”.</p></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- BATCH -->
+  <section id="view-batch" class="view" hidden>
+    <div class="card">
+      <div class="card-head"><div><h2>Score a file</h2>
+        <p class="muted">Upload a CSV of cleaned stays (the same columns as the training data). Outcome columns are removed before sending. The file is read in your browser and sent only to this API.</p></div></div>
+      <div class="drop" id="drop"><b>Choose a CSV</b> or drop it here<div class="muted small mt" id="dropName">No file chosen</div></div>
+      <input type="file" id="csvFile" accept=".csv,text/csv" hidden>
+      <div id="batchInfo" class="mt"></div>
+      <div class="actions" id="batchActions" hidden>
+        <label class="sel"><span class="muted">Rows to score</span><input class="num-in" type="number" id="batchN" min="1"><span class="muted small" id="batchOf"></span></label>
+        <label class="check"><input type="checkbox" id="batchExplain"> Include top driver (slower)</label>
+        <button class="btn ghost" id="btnCancel" type="button" hidden>Cancel</button>
+        <button class="btn primary" id="btnBatch" type="button">Score file</button>
+      </div>
+      <div class="progress" id="progress" hidden><div id="bar"></div></div>
+    </div>
+    <div id="batchResults" class="mt"></div>
+  </section>
+
+  <!-- MODEL -->
+  <section id="view-model" class="view" hidden>
+    <div id="modelMount" class="cards"><div class="card muted">Loading…</div></div>
+  </section>
+
+  <!-- MONITOR -->
+  <section id="view-monitor" class="view" hidden>
+    <div class="row" style="justify-content:space-between;margin-bottom:14px">
+      <div><h2>Monitoring</h2><p class="muted small">Totals since the API last started (they reset on restart). Prometheus, in a later step, will keep the history.</p></div>
+      <div class="row"><label class="check small"><input type="checkbox" id="autoRefresh" checked> Auto-refresh</label>
+        <button class="btn ghost tiny" id="btnRefreshMon" type="button">Refresh now</button></div>
+    </div>
+    <div id="monMount"><div class="card muted">Loading…</div></div>
+  </section>
+</main>
+
+<footer>This console talks only to the API that serves it. Scores rank stays by risk; they are not probabilities. Not a clinical tool and not validated for use with real patients. <span id="uiver"></span></footer>
+<div id="toast" class="toast" hidden></div>
+
+<script src="/ui/app.js" defer></script>
+</body>
+</html>

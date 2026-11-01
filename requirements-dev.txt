@@ -1,0 +1,4 @@
+# Python 3.9. Tools for CI and local checks only; the pipeline itself needs requirements.txt.
+# Tests import serving/app.py, so install serving/requirements-serve.txt as well.
+pytest==8.3.4
+ruff==0.6.9

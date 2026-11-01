@@ -1,0 +1,40 @@
+# ---- environments and caches
+.venv/
+.venv-prefect/
+venv/
+env/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.env
+*.tmp
+
+# ---- data: download it from UCI (see README); the splits and cleaned files are rebuilt by the scripts
+# Keep only the raw dataset that users need to run the project.
+data/*
+!data/diabetic_data.csv
+
+# ---- pipeline outputs, rebuilt by running the scripts.
+# Kept out because they hold local file paths (the .jsonl logs) or are large (.joblib).
+models/*
+# the plain-language reports are fine to publish: they hold results, no paths or patient rows
+!models/model_report.md
+!models/test_report.md
+!models/champion_report.md
+!models/promotion_report.md
+
+# ---- MLflow: local metadata and artifact directories stay local.
+# mlflow.db may contain local paths and secret-like values, and it is not needed in the repo.
+# Rebuild the run history locally from the project instructions instead.
+mlflow.db
+mlruns/
+
+# ---- serving runtime files (the prediction log holds patient-level rows: never commit it)
+serving/bundle/
+serving/logs/
+
+# ---- experiments and backups kept local, not part of the pipeline
+code/v2_*.py
+code/demo_code/
+backups/

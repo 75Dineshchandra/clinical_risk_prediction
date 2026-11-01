@@ -1,0 +1,78 @@
+services:
+  readmission-api:
+    build:
+      context: ./serving
+    image: readmission-api:local
+    container_name: readmission-api
+    ports:
+      - "8000:8000"
+    environment:
+      MAX_RECORDS: "500"
+      ID_FIELD: "encounter_id"
+      LOG_PREDICTIONS: "true"
+      # ADMIN_TOKEN: "change-me"        # if set, POST /reload needs the header X-Admin-Token
+    volumes:
+      - ./serving/bundle:/app/bundle:ro   # the exported champion (python serving/export_champion.py)
+      - ./serving/logs:/app/logs          # prediction log, used for drift and late-label checks
+      - ./serving/ui:/app/ui:ro           # the console: edits show up after a browser refresh, no rebuild needed
+    restart: unless-stopped
+
+  drift-exporter:
+    build:
+      context: ./monitoring
+      dockerfile: Dockerfile.drift
+    image: readmission-drift:local
+    container_name: readmission-drift
+    environment:
+      LOG_PATH: "/data/logs/predictions.jsonl"
+      PROFILE_PATH: "/data/bundle/reference_profile.json"
+      WINDOW_ROWS: "1000"        # compare the most recent 1000 stays with the reference
+      MIN_ROWS: "500"            # fewer stays than this: no verdict
+      MAX_AGE_SECONDS: "600"     # newest stay older than this: no verdict (no recent traffic)
+      INTERVAL: "15"             # seconds between evaluations
+      # RUN_ID: "demo1"          # only use stays of one replay run (default: all traffic)
+    ports:
+      - "9100:9100"
+    volumes:
+      - ./serving/logs:/data/logs:ro        # the API's prediction log, read-only
+      - ./serving/bundle:/data/bundle:ro    # reference_profile.json, written by serving/export_champion.py
+    depends_on:
+      - readmission-api
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:v2.55.1
+    container_name: readmission-prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--storage.tsdb.retention.time=30d"
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus:/etc/prometheus:ro   # prometheus.yml and the alert rule files
+      - prometheus_data:/prometheus                  # the metric history survives restarts and rebuilds
+    depends_on:
+      - readmission-api
+      - drift-exporter
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:11.3.0
+    container_name: readmission-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: "admin"
+      GF_SECURITY_ADMIN_PASSWORD: "${GRAFANA_PASSWORD:-admin}"   # set GRAFANA_PASSWORD in a .env file to change it
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro   # the Prometheus data source
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+
+volumes:
+  prometheus_data:
+  grafana_data:

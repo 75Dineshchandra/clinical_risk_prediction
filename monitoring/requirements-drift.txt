@@ -1,0 +1,4 @@
+# Python 3.9. Same versions as training and serving, so the PSI numbers match the report.
+pandas==2.2.3
+numpy==1.26.4
+prometheus-client==0.21.1

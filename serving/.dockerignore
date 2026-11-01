@@ -1,0 +1,8 @@
+bundle/
+logs/
+__pycache__/
+*.pyc
+export_champion.py
+send_sample.py
+replay.py
+rollback_drill.py

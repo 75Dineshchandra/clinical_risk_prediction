@@ -1,0 +1,46 @@
+# Alert rules (step 12). They show on http://localhost:9090/alerts.
+# No notification is sent anywhere yet: Prometheus only records that the rule is firing.
+groups:
+  - name: readmission-api
+    rules:
+      - alert: ApiDown
+        expr: up{job="readmission-api"} == 0
+        for: 1m
+        labels: {severity: critical}
+        annotations:
+          summary: "The readmission API cannot be scraped"
+
+      - alert: FlaggedShareOutOfRange
+        # About 20% of stays should be flagged on typical data. Outside 12% to 28% for 15 minutes is suspicious.
+        # With no traffic the division gives no value, so this stays quiet when nothing is being scored.
+        expr: |
+          (sum(rate(readmission_predictions_total{outcome="high_risk"}[15m])) / sum(rate(readmission_predictions_total[15m])) > 0.28)
+          or
+          (sum(rate(readmission_predictions_total{outcome="high_risk"}[15m])) / sum(rate(readmission_predictions_total[15m])) < 0.12)
+        for: 15m
+        labels: {severity: warning}
+        annotations:
+          summary: "Share of stays flagged high risk is outside 12% to 28%"
+
+      - alert: PredictLatencyHigh
+        expr: histogram_quantile(0.95, sum by (le) (rate(readmission_http_request_duration_seconds_bucket{path="/predict"}[5m]))) > 1
+        for: 5m
+        labels: {severity: warning}
+        annotations:
+          summary: "95% of /predict requests take longer than 1 second"
+
+      - alert: ErrorShareHigh
+        expr: |
+          sum(rate(readmission_http_requests_total{status!~"2.."}[5m]))
+          / sum(rate(readmission_http_requests_total[5m])) > 0.02
+        for: 5m
+        labels: {severity: warning}
+        annotations:
+          summary: "More than 2% of requests are rejected or failing"
+
+      - alert: UnseenCategoriesRising
+        expr: sum(increase(readmission_unseen_category_total[1h])) > 25
+        for: 10m
+        labels: {severity: warning}
+        annotations:
+          summary: "Many category values never seen in training (normal is about 1 per 5,000 stays)"

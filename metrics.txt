@@ -1,0 +1,241 @@
+﻿# HELP python_gc_objects_collected_total Objects collected during gc
+# TYPE python_gc_objects_collected_total counter
+python_gc_objects_collected_total{generation="0"} 1960.0
+python_gc_objects_collected_total{generation="1"} 946.0
+python_gc_objects_collected_total{generation="2"} 49.0
+# HELP python_gc_objects_uncollectable_total Uncollectable objects found during GC
+# TYPE python_gc_objects_uncollectable_total counter
+python_gc_objects_uncollectable_total{generation="0"} 0.0
+python_gc_objects_uncollectable_total{generation="1"} 0.0
+python_gc_objects_uncollectable_total{generation="2"} 0.0
+# HELP python_gc_collections_total Number of times this generation was collected
+# TYPE python_gc_collections_total counter
+python_gc_collections_total{generation="0"} 532.0
+python_gc_collections_total{generation="1"} 48.0
+python_gc_collections_total{generation="2"} 4.0
+# HELP python_info Python platform information
+# TYPE python_info gauge
+python_info{implementation="CPython",major="3",minor="9",patchlevel="25",version="3.9.25"} 1.0
+# HELP process_virtual_memory_bytes Virtual memory size in bytes.
+# TYPE process_virtual_memory_bytes gauge
+process_virtual_memory_bytes 2.24630784e+09
+# HELP process_resident_memory_bytes Resident memory size in bytes.
+# TYPE process_resident_memory_bytes gauge
+process_resident_memory_bytes 2.62172672e+08
+# HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
+# TYPE process_start_time_seconds gauge
+process_start_time_seconds 1.79344209137e+09
+# HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
+# TYPE process_cpu_seconds_total counter
+process_cpu_seconds_total 16.78
+# HELP process_open_fds Number of open file descriptors.
+# TYPE process_open_fds gauge
+process_open_fds 9.0
+# HELP process_max_fds Maximum number of open file descriptors.
+# TYPE process_max_fds gauge
+process_max_fds 1.048576e+06
+# HELP readmission_http_requests_total HTTP requests
+# TYPE readmission_http_requests_total counter
+readmission_http_requests_total{method="GET",path="/health",status="200"} 45.0
+readmission_http_requests_total{method="GET",path="/",status="200"} 1.0
+readmission_http_requests_total{method="GET",path="/ui/*",status="200"} 2.0
+readmission_http_requests_total{method="GET",path="/model-info",status="200"} 1.0
+readmission_http_requests_total{method="GET",path="/example",status="200"} 1.0
+readmission_http_requests_total{method="GET",path="/favicon.ico",status="200"} 1.0
+readmission_http_requests_total{method="POST",path="/predict",status="200"} 20.0
+# HELP readmission_http_requests_created HTTP requests
+# TYPE readmission_http_requests_created gauge
+readmission_http_requests_created{method="GET",path="/health",status="200"} 1.7934421105571256e+09
+readmission_http_requests_created{method="GET",path="/",status="200"} 1.7934421522201262e+09
+readmission_http_requests_created{method="GET",path="/ui/*",status="200"} 1.7934421523259916e+09
+readmission_http_requests_created{method="GET",path="/model-info",status="200"} 1.793442152618458e+09
+readmission_http_requests_created{method="GET",path="/example",status="200"} 1.7934421530315573e+09
+readmission_http_requests_created{method="GET",path="/favicon.ico",status="200"} 1.793442153230206e+09
+readmission_http_requests_created{method="POST",path="/predict",status="200"} 1.7934421817484653e+09
+# HELP readmission_http_request_duration_seconds HTTP request latency
+# TYPE readmission_http_request_duration_seconds histogram
+readmission_http_request_duration_seconds_bucket{le="0.005",method="GET",path="/health"} 44.0
+readmission_http_request_duration_seconds_bucket{le="0.01",method="GET",path="/health"} 44.0
+readmission_http_request_duration_seconds_bucket{le="0.025",method="GET",path="/health"} 45.0
+readmission_http_request_duration_seconds_bucket{le="0.05",method="GET",path="/health"} 45.0
+readmission_http_request_duration_seconds_bucket{le="0.1",method="GET",path="/health"} 45.0
+readmission_http_request_duration_seconds_bucket{le="0.25",method="GET",path="/health"} 45.0
+readmission_http_request_duration_seconds_bucket{le="0.5",method="GET",path="/health"} 45.0
+readmission_http_request_duration_seconds_bucket{le="1.0",method="GET",path="/health"} 45.0
+readmission_http_request_duration_seconds_bucket{le="2.5",method="GET",path="/health"} 45.0
+readmission_http_request_duration_seconds_bucket{le="5.0",method="GET",path="/health"} 45.0
+readmission_http_request_duration_seconds_bucket{le="10.0",method="GET",path="/health"} 45.0
+readmission_http_request_duration_seconds_bucket{le="+Inf",method="GET",path="/health"} 45.0
+readmission_http_request_duration_seconds_count{method="GET",path="/health"} 45.0
+readmission_http_request_duration_seconds_sum{method="GET",path="/health"} 0.06731990600019344
+readmission_http_request_duration_seconds_bucket{le="0.005",method="GET",path="/"} 0.0
+readmission_http_request_duration_seconds_bucket{le="0.01",method="GET",path="/"} 0.0
+readmission_http_request_duration_seconds_bucket{le="0.025",method="GET",path="/"} 0.0
+readmission_http_request_duration_seconds_bucket{le="0.05",method="GET",path="/"} 0.0
+readmission_http_request_duration_seconds_bucket{le="0.1",method="GET",path="/"} 1.0
+readmission_http_request_duration_seconds_bucket{le="0.25",method="GET",path="/"} 1.0
+readmission_http_request_duration_seconds_bucket{le="0.5",method="GET",path="/"} 1.0
+readmission_http_request_duration_seconds_bucket{le="1.0",method="GET",path="/"} 1.0
+readmission_http_request_duration_seconds_bucket{le="2.5",method="GET",path="/"} 1.0
+readmission_http_request_duration_seconds_bucket{le="5.0",method="GET",path="/"} 1.0
+readmission_http_request_duration_seconds_bucket{le="10.0",method="GET",path="/"} 1.0
+readmission_http_request_duration_seconds_bucket{le="+Inf",method="GET",path="/"} 1.0
+readmission_http_request_duration_seconds_count{method="GET",path="/"} 1.0
+readmission_http_request_duration_seconds_sum{method="GET",path="/"} 0.0678910840001663
+readmission_http_request_duration_seconds_bucket{le="0.005",method="GET",path="/ui/*"} 0.0
+readmission_http_request_duration_seconds_bucket{le="0.01",method="GET",path="/ui/*"} 0.0
+readmission_http_request_duration_seconds_bucket{le="0.025",method="GET",path="/ui/*"} 0.0
+readmission_http_request_duration_seconds_bucket{le="0.05",method="GET",path="/ui/*"} 2.0
+readmission_http_request_duration_seconds_bucket{le="0.1",method="GET",path="/ui/*"} 2.0
+readmission_http_request_duration_seconds_bucket{le="0.25",method="GET",path="/ui/*"} 2.0
+readmission_http_request_duration_seconds_bucket{le="0.5",method="GET",path="/ui/*"} 2.0
+readmission_http_request_duration_seconds_bucket{le="1.0",method="GET",path="/ui/*"} 2.0
+readmission_http_request_duration_seconds_bucket{le="2.5",method="GET",path="/ui/*"} 2.0
+readmission_http_request_duration_seconds_bucket{le="5.0",method="GET",path="/ui/*"} 2.0
+readmission_http_request_duration_seconds_bucket{le="10.0",method="GET",path="/ui/*"} 2.0
+readmission_http_request_duration_seconds_bucket{le="+Inf",method="GET",path="/ui/*"} 2.0
+readmission_http_request_duration_seconds_count{method="GET",path="/ui/*"} 2.0
+readmission_http_request_duration_seconds_sum{method="GET",path="/ui/*"} 0.0619507540000086
+readmission_http_request_duration_seconds_bucket{le="0.005",method="GET",path="/model-info"} 0.0
+readmission_http_request_duration_seconds_bucket{le="0.01",method="GET",path="/model-info"} 0.0
+readmission_http_request_duration_seconds_bucket{le="0.025",method="GET",path="/model-info"} 1.0
+readmission_http_request_duration_seconds_bucket{le="0.05",method="GET",path="/model-info"} 1.0
+readmission_http_request_duration_seconds_bucket{le="0.1",method="GET",path="/model-info"} 1.0
+readmission_http_request_duration_seconds_bucket{le="0.25",method="GET",path="/model-info"} 1.0
+readmission_http_request_duration_seconds_bucket{le="0.5",method="GET",path="/model-info"} 1.0
+readmission_http_request_duration_seconds_bucket{le="1.0",method="GET",path="/model-info"} 1.0
+readmission_http_request_duration_seconds_bucket{le="2.5",method="GET",path="/model-info"} 1.0
+readmission_http_request_duration_seconds_bucket{le="5.0",method="GET",path="/model-info"} 1.0
+readmission_http_request_duration_seconds_bucket{le="10.0",method="GET",path="/model-info"} 1.0
+readmission_http_request_duration_seconds_bucket{le="+Inf",method="GET",path="/model-info"} 1.0
+readmission_http_request_duration_seconds_count{method="GET",path="/model-info"} 1.0
+readmission_http_request_duration_seconds_sum{method="GET",path="/model-info"} 0.010535620000155177
+readmission_http_request_duration_seconds_bucket{le="0.005",method="GET",path="/example"} 1.0
+readmission_http_request_duration_seconds_bucket{le="0.01",method="GET",path="/example"} 1.0
+readmission_http_request_duration_seconds_bucket{le="0.025",method="GET",path="/example"} 1.0
+readmission_http_request_duration_seconds_bucket{le="0.05",method="GET",path="/example"} 1.0
+readmission_http_request_duration_seconds_bucket{le="0.1",method="GET",path="/example"} 1.0
+readmission_http_request_duration_seconds_bucket{le="0.25",method="GET",path="/example"} 1.0
+readmission_http_request_duration_seconds_bucket{le="0.5",method="GET",path="/example"} 1.0
+readmission_http_request_duration_seconds_bucket{le="1.0",method="GET",path="/example"} 1.0
+readmission_http_request_duration_seconds_bucket{le="2.5",method="GET",path="/example"} 1.0
+readmission_http_request_duration_seconds_bucket{le="5.0",method="GET",path="/example"} 1.0
+readmission_http_request_duration_seconds_bucket{le="10.0",method="GET",path="/example"} 1.0
+readmission_http_request_duration_seconds_bucket{le="+Inf",method="GET",path="/example"} 1.0
+readmission_http_request_duration_seconds_count{method="GET",path="/example"} 1.0
+readmission_http_request_duration_seconds_sum{method="GET",path="/example"} 0.004131308000069112
+readmission_http_request_duration_seconds_bucket{le="0.005",method="GET",path="/favicon.ico"} 1.0
+readmission_http_request_duration_seconds_bucket{le="0.01",method="GET",path="/favicon.ico"} 1.0
+readmission_http_request_duration_seconds_bucket{le="0.025",method="GET",path="/favicon.ico"} 1.0
+readmission_http_request_duration_seconds_bucket{le="0.05",method="GET",path="/favicon.ico"} 1.0
+readmission_http_request_duration_seconds_bucket{le="0.1",method="GET",path="/favicon.ico"} 1.0
+readmission_http_request_duration_seconds_bucket{le="0.25",method="GET",path="/favicon.ico"} 1.0
+readmission_http_request_duration_seconds_bucket{le="0.5",method="GET",path="/favicon.ico"} 1.0
+readmission_http_request_duration_seconds_bucket{le="1.0",method="GET",path="/favicon.ico"} 1.0
+readmission_http_request_duration_seconds_bucket{le="2.5",method="GET",path="/favicon.ico"} 1.0
+readmission_http_request_duration_seconds_bucket{le="5.0",method="GET",path="/favicon.ico"} 1.0
+readmission_http_request_duration_seconds_bucket{le="10.0",method="GET",path="/favicon.ico"} 1.0
+readmission_http_request_duration_seconds_bucket{le="+Inf",method="GET",path="/favicon.ico"} 1.0
+readmission_http_request_duration_seconds_count{method="GET",path="/favicon.ico"} 1.0
+readmission_http_request_duration_seconds_sum{method="GET",path="/favicon.ico"} 0.0027470130000892823
+readmission_http_request_duration_seconds_bucket{le="0.005",method="POST",path="/predict"} 0.0
+readmission_http_request_duration_seconds_bucket{le="0.01",method="POST",path="/predict"} 0.0
+readmission_http_request_duration_seconds_bucket{le="0.025",method="POST",path="/predict"} 0.0
+readmission_http_request_duration_seconds_bucket{le="0.05",method="POST",path="/predict"} 0.0
+readmission_http_request_duration_seconds_bucket{le="0.1",method="POST",path="/predict"} 0.0
+readmission_http_request_duration_seconds_bucket{le="0.25",method="POST",path="/predict"} 19.0
+readmission_http_request_duration_seconds_bucket{le="0.5",method="POST",path="/predict"} 20.0
+readmission_http_request_duration_seconds_bucket{le="1.0",method="POST",path="/predict"} 20.0
+readmission_http_request_duration_seconds_bucket{le="2.5",method="POST",path="/predict"} 20.0
+readmission_http_request_duration_seconds_bucket{le="5.0",method="POST",path="/predict"} 20.0
+readmission_http_request_duration_seconds_bucket{le="10.0",method="POST",path="/predict"} 20.0
+readmission_http_request_duration_seconds_bucket{le="+Inf",method="POST",path="/predict"} 20.0
+readmission_http_request_duration_seconds_count{method="POST",path="/predict"} 20.0
+readmission_http_request_duration_seconds_sum{method="POST",path="/predict"} 2.974200197000073
+# HELP readmission_http_request_duration_seconds_created HTTP request latency
+# TYPE readmission_http_request_duration_seconds_created gauge
+readmission_http_request_duration_seconds_created{method="GET",path="/health"} 1.7934421105571806e+09
+readmission_http_request_duration_seconds_created{method="GET",path="/"} 1.7934421522203624e+09
+readmission_http_request_duration_seconds_created{method="GET",path="/ui/*"} 1.7934421523260508e+09
+readmission_http_request_duration_seconds_created{method="GET",path="/model-info"} 1.7934421526185164e+09
+readmission_http_request_duration_seconds_created{method="GET",path="/example"} 1.7934421530316188e+09
+readmission_http_request_duration_seconds_created{method="GET",path="/favicon.ico"} 1.7934421532302725e+09
+readmission_http_request_duration_seconds_created{method="POST",path="/predict"} 1.7934421817488227e+09
+# HELP readmission_predictions_total Records scored
+# TYPE readmission_predictions_total counter
+readmission_predictions_total{outcome="low_risk"} 8010.0
+readmission_predictions_total{outcome="high_risk"} 1990.0
+# HELP readmission_predictions_created Records scored
+# TYPE readmission_predictions_created gauge
+readmission_predictions_created{outcome="low_risk"} 1.7934421817031543e+09
+readmission_predictions_created{outcome="high_risk"} 1.793442181703268e+09
+# HELP readmission_prediction_score Distribution of scores
+# TYPE readmission_prediction_score histogram
+readmission_prediction_score_bucket{le="0.05"} 7.0
+readmission_prediction_score_bucket{le="0.1"} 65.0
+readmission_prediction_score_bucket{le="0.15"} 318.0
+readmission_prediction_score_bucket{le="0.2"} 728.0
+readmission_prediction_score_bucket{le="0.25"} 1427.0
+readmission_prediction_score_bucket{le="0.3"} 2308.0
+readmission_prediction_score_bucket{le="0.35"} 3362.0
+readmission_prediction_score_bucket{le="0.4"} 4593.0
+readmission_prediction_score_bucket{le="0.45"} 5747.0
+readmission_prediction_score_bucket{le="0.5"} 6836.0
+readmission_prediction_score_bucket{le="0.55"} 7765.0
+readmission_prediction_score_bucket{le="0.6"} 8579.0
+readmission_prediction_score_bucket{le="0.65"} 9173.0
+readmission_prediction_score_bucket{le="0.7"} 9577.0
+readmission_prediction_score_bucket{le="0.75"} 9814.0
+readmission_prediction_score_bucket{le="0.8"} 9928.0
+readmission_prediction_score_bucket{le="0.85"} 9976.0
+readmission_prediction_score_bucket{le="0.9"} 9994.0
+readmission_prediction_score_bucket{le="0.95"} 10000.0
+readmission_prediction_score_bucket{le="1.0"} 10000.0
+readmission_prediction_score_bucket{le="+Inf"} 10000.0
+readmission_prediction_score_count 10000.0
+readmission_prediction_score_sum 4239.741421764012
+# HELP readmission_prediction_score_created Distribution of scores
+# TYPE readmission_prediction_score_created gauge
+readmission_prediction_score_created 1.7934421023780298e+09
+# HELP readmission_batch_size Records per /predict request
+# TYPE readmission_batch_size histogram
+readmission_batch_size_bucket{le="1.0"} 0.0
+readmission_batch_size_bucket{le="5.0"} 0.0
+readmission_batch_size_bucket{le="10.0"} 0.0
+readmission_batch_size_bucket{le="50.0"} 0.0
+readmission_batch_size_bucket{le="100.0"} 0.0
+readmission_batch_size_bucket{le="250.0"} 0.0
+readmission_batch_size_bucket{le="500.0"} 20.0
+readmission_batch_size_bucket{le="1000.0"} 20.0
+readmission_batch_size_bucket{le="+Inf"} 20.0
+readmission_batch_size_count 20.0
+readmission_batch_size_sum 10000.0
+# HELP readmission_batch_size_created Records per /predict request
+# TYPE readmission_batch_size_created gauge
+readmission_batch_size_created 1.7934421023781145e+09
+# HELP readmission_validation_errors_total Rejected requests
+# TYPE readmission_validation_errors_total counter
+# HELP readmission_unseen_category_total Category values never seen in training
+# TYPE readmission_unseen_category_total counter
+readmission_unseen_category_total{column="chlorpropamide"} 1.0
+readmission_unseen_category_total{column="tolazamide"} 1.0
+# HELP readmission_unseen_category_created Category values never seen in training
+# TYPE readmission_unseen_category_created gauge
+readmission_unseen_category_created{column="chlorpropamide"} 1.7934421821398144e+09
+readmission_unseen_category_created{column="tolazamide"} 1.7934422024413593e+09
+# HELP readmission_model_info Live model (value is always 1)
+# TYPE readmission_model_info gauge
+readmission_model_info{alias="champion",family="lightgbm",name="readmission",version="2"} 1.0
+# HELP readmission_model_loaded_timestamp_seconds When the live model was loaded
+# TYPE readmission_model_loaded_timestamp_seconds gauge
+readmission_model_loaded_timestamp_seconds 1.7934421050688818e+09
+# HELP readmission_model_reloads_total Model load attempts
+# TYPE readmission_model_reloads_total counter
+readmission_model_reloads_total{outcome="ok"} 1.0
+# HELP readmission_model_reloads_created Model load attempts
+# TYPE readmission_model_reloads_created gauge
+readmission_model_reloads_created{outcome="ok"} 1.7934421050689168e+09
+# HELP readmission_replay_week Simulated week of the most recent replay request (only set when X-Replay-Week is sent)
+# TYPE readmission_replay_week gauge
+readmission_replay_week 0.0
+
