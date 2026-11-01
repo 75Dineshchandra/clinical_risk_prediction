@@ -14,6 +14,7 @@ __pycache__/
 # Keep only the raw dataset that users need to run the project.
 data/*
 !data/diabetic_data.csv
+!data/IDS_mapping.csv
 
 # ---- pipeline outputs, rebuilt by running the scripts.
 # Kept out because they hold local file paths (the .jsonl logs) or are large (.joblib).
