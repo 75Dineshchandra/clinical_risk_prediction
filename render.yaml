@@ -1,0 +1,21 @@
+# Render Blueprint: the public readmission API (plan step 18).
+# Create it in Render: New > Blueprint > pick this repository. Render builds deploy/Dockerfile from the repository root.
+# The model is baked into the image (deploy/bundle, made by deploy/prepare_bundle.py), so a promotion is:
+#   python serving/export_champion.py ; python deploy/prepare_bundle.py ; git add deploy/bundle ; git commit ; git push
+services:
+  - type: web
+    name: readmission-api
+    runtime: docker
+    plan: free                      # free instances sleep when idle; if the build or the service runs out of memory, use starter
+    dockerfilePath: ./deploy/Dockerfile
+    dockerContext: .
+    healthCheckPath: /health        # 200 when a model is loaded, 503 otherwise
+    envVars:
+      - key: ADMIN_TOKEN            # protects POST /reload; Render generates it (see the service's Environment tab)
+        generateValue: true
+      - key: LOG_PREDICTIONS        # a public service: do not keep patient-level rows (the disk is temporary anyway)
+        value: "false"
+      - key: MAX_RECORDS            # smaller than locally (500): limits the work one public request can ask for
+        value: "100"
+      - key: ID_FIELD
+        value: encounter_id
