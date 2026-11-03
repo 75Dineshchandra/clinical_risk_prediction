@@ -4,7 +4,7 @@
 #   python serving/export_champion.py ; python deploy/prepare_bundle.py ; git add deploy/bundle ; git commit ; git push
 services:
   - type: web
-    name: readmission-api
+    name: clinical-risk-prediction     # was: readmission-api
     runtime: docker
     plan: free                      # free instances sleep when idle; if the build or the service runs out of memory, use starter
     dockerfilePath: ./deploy/Dockerfile
