@@ -1,4 +1,4 @@
-# Hospital readmission MLOps project
+# Clinical readmission MLOps project
 
 Predict which diabetic hospital stays will end in a readmission within 30 days, and manage the models behind that
 prediction in a disciplined, repeatable way: clean, split, train, gate, register, promote, serve over an API,
@@ -8,8 +8,7 @@ monitor, detect drift, measure real performance from late labels, decide when to
 (batch scoring: https://clinical-risk-prediction.onrender.com/#batch, API docs: `/docs`, health: `/health`).
 The service runs on Render's free plan, so after a quiet period the first request can take 30 to 60 seconds while it wakes up.
 
-> **Not a clinical tool.** The model has not been validated for use with real patients. Do not upload real patient data
-> to the public demo. The data used here is the public UCI "Diabetes 130-US Hospitals (1999-2008)" dataset
+> **Not a clinical tool.** The Project covers full MLOps Lifecycle, Not for clinical use. The data used here is the public UCI "Diabetes 130-US Hospitals (1999-2008)" dataset
 > (CC BY 4.0, https://doi.org/10.24432/C5230J).
 
 Last updated: 2026-11-03.
