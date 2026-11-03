@@ -14,6 +14,15 @@ scrape_configs:
     static_configs:
       - targets: ["readmission-api:8000"]   # the compose service name; resolves inside the compose network
 
+  - job_name: readmission-render            # the public API on Render
+    metrics_path: /metrics
+    scheme: https                           # Render only serves HTTPS
+    scrape_interval: 30s                    # gentler on a free instance
+    scrape_timeout: 20s                     # a sleeping instance can be slow to answer
+    static_configs:
+      - targets: ["clinical-risk-prediction.onrender.com"]   # hostname only: no https://, no path
+        labels: {env: "render"}
+
   - job_name: drift-exporter                # step 13: PSI of every input feature and of the scores
     metrics_path: /metrics
     static_configs:
